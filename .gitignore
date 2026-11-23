@@ -50,3 +50,5 @@ practice.cpp
 practice.dSYM/
 .vscode/
 presentation/demo-site/
+.claude/
+presentation/
