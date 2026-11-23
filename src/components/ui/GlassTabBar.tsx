@@ -23,7 +23,7 @@ export function GlassTabBar({ state, descriptors, navigation }: BottomTabBarProp
     <View style={[styles.wrap, { bottom: Math.max(insets.bottom, 12) }]} pointerEvents="box-none">
       <View style={styles.shadow}>
         <View style={styles.bar}>
-          <BlurView intensity={50} tint="dark" style={StyleSheet.absoluteFill} />
+          <BlurView intensity={22} tint="light" style={StyleSheet.absoluteFill} />
           <View style={[StyleSheet.absoluteFill, { backgroundColor: colors.glassBgPrimary }]} />
           <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.border]} />
           {state.routes.map((route, index) => {
@@ -102,9 +102,9 @@ const styles = StyleSheet.create({
     height: 16,
     borderRadius: 8,
     paddingHorizontal: 4,
-    backgroundColor: colors.accentMatch,
+    backgroundColor: colors.accentDanger,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  badgeText: { fontFamily: fonts.monoMedium, fontSize: 9, color: '#1a2a1a' },
+  badgeText: { fontFamily: fonts.monoMedium, fontSize: 9, color: '#FFFFFF' },
 });

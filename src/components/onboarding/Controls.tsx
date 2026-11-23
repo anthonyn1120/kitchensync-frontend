@@ -10,7 +10,7 @@ import { usePressScale, useSelection } from './Motion';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 /** Selected chip/day fill: a stronger accent tint so white text stays readable over the light top of the background. */
-const ACTIVE_FILL = 'rgba(163,196,129,0.3)';
+const ACTIVE_FILL = 'rgba(61,122,95,0.14)';
 
 /** .mono-meta section label with an optional right-side note. */
 export function FieldLabel({ children, hint }: { children: string; hint?: string }) {
@@ -53,8 +53,8 @@ export function TagPill({ label, active, onPress, removable, dashed }: { label: 
   const press = usePressScale(0.95);
   const s = useSelection(!!active);
   const look = useAnimatedStyle(() => ({
-    backgroundColor: interpolateColor(s.value, [0, 1], ['rgba(255,255,255,0.06)', ACTIVE_FILL]),
-    borderColor: interpolateColor(s.value, [0, 1], [dashed ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.12)', colors.accentMatch]),
+    backgroundColor: interpolateColor(s.value, [0, 1], ['rgba(34,62,53,0.05)', ACTIVE_FILL]),
+    borderColor: interpolateColor(s.value, [0, 1], [dashed ? 'rgba(34,62,53,0.28)' : 'rgba(34,62,53,0.14)', colors.accentMatch]),
   }));
   const tint = active ? colors.textPrimary : colors.textSecondary;
   return (
@@ -137,8 +137,8 @@ function DayNode({ day, on, onPress }: { day: Weekday; on: boolean; onPress: () 
   const press = usePressScale(0.94);
   const s = useSelection(on);
   const look = useAnimatedStyle(() => ({
-    backgroundColor: interpolateColor(s.value, [0, 1], ['rgba(255,255,255,0.06)', ACTIVE_FILL]),
-    borderColor: interpolateColor(s.value, [0, 1], ['rgba(255,255,255,0.1)', colors.accentMatch]),
+    backgroundColor: interpolateColor(s.value, [0, 1], ['rgba(34,62,53,0.05)', ACTIVE_FILL]),
+    borderColor: interpolateColor(s.value, [0, 1], ['rgba(34,62,53,0.12)', colors.accentMatch]),
   }));
   return (
     <AnimatedPressable
@@ -328,6 +328,6 @@ const styles = StyleSheet.create({
     borderColor: colors.controlBorder,
   },
   inputMultiline: { alignItems: 'flex-start', paddingVertical: 16, borderRadius: 22 },
-  inputFocused: { borderColor: 'rgba(255,255,255,0.3)', backgroundColor: colors.controlBgPressed },
+  inputFocused: { borderColor: 'rgba(34,62,53,0.40)', backgroundColor: colors.controlBgPressed },
   inputText: { flex: 1, fontFamily: fonts.regular, fontSize: 16, color: colors.textPrimary, paddingVertical: 14 },
 });

@@ -61,7 +61,7 @@ export function Sheet({ visible, onClose, eyebrow, title, children }: Props) {
         </Animated.View>
         <View style={styles.anchor} pointerEvents="box-none">
           <Animated.View style={[styles.sheet, { paddingBottom: insets.bottom + 16 }, sheetStyle]}>
-            <BlurView intensity={60} tint="dark" style={StyleSheet.absoluteFill} />
+            <BlurView intensity={22} tint="light" style={StyleSheet.absoluteFill} />
             <View style={[StyleSheet.absoluteFill, styles.tint]} />
             <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.border]} />
             <GestureDetector gesture={pan}>
@@ -93,7 +93,7 @@ export function Sheet({ visible, onClose, eyebrow, title, children }: Props) {
 }
 
 const styles = StyleSheet.create({
-  backdrop: { backgroundColor: 'rgba(0,0,0,0.45)' },
+  backdrop: { backgroundColor: 'rgba(34,62,53,0.32)' },
   anchor: { flex: 1, justifyContent: 'flex-end' },
   sheet: {
     borderTopLeftRadius: radius.card + 4,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     maxHeight: '88%',
   },
-  tint: { backgroundColor: colors.glassBgPrimary },
+  tint: { backgroundColor: colors.sheetBg },
   border: {
     borderTopLeftRadius: radius.card + 4,
     borderTopRightRadius: radius.card + 4,

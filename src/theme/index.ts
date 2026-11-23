@@ -1,43 +1,51 @@
 // Design tokens ported 1:1 from the HTML mockups' :root variables.
 
 export const colors = {
-  envBg: '#f5f6f4',
-  envBlob1: '#6b7a57', // olive
-  envBlob2: '#4a5c6a', // slate
-  envBlob3: '#8c7a6b', // clay
+  // Soft-matte look: cream page, deep forest green, terracotta accents. Panels are a light, barely-frosted
+  // white instead of dark glass, so the old "glass" tokens keep their names but hold soft-light values.
+  envBg: '#F7F7F3',
+  envBlob1: '#D3E2D6', // sage mist
+  envBlob2: '#E6EEE7', // pale sage
+  envBlob3: '#F3E5DA', // warm clay tint
 
-  glassBgPrimary: 'rgba(75, 85, 75, 0.55)',
-  glassBgSecondary: 'rgba(60, 70, 60, 0.4)',
-  glassBorderLight: 'rgba(255, 255, 255, 0.25)',
-  glassBorderDim: 'rgba(255, 255, 255, 0.05)',
+  glassBgPrimary: 'rgba(255, 255, 255, 0.82)',
+  glassBgSecondary: 'rgba(232, 239, 233, 0.88)',
+  sheetBg: 'rgba(251, 251, 248, 0.97)', // bottom sheets: nearly solid, nothing ghosting through
+  glassBorderLight: 'rgba(34, 62, 53, 0.10)',
+  glassBorderDim: 'rgba(34, 62, 53, 0.08)',
 
-  controlBg: 'rgba(20, 25, 20, 0.45)',
-  controlBgPressed: 'rgba(10, 15, 10, 0.6)',
-  controlBorder: 'rgba(255, 255, 255, 0.12)',
+  controlBg: 'rgba(34, 62, 53, 0.06)',
+  controlBgPressed: 'rgba(34, 62, 53, 0.12)',
+  controlBorder: 'rgba(34, 62, 53, 0.14)',
 
-  textPrimary: 'rgba(255, 255, 255, 0.95)',
-  textSecondary: 'rgba(255, 255, 255, 0.7)',
-  textTertiary: 'rgba(255, 255, 255, 0.6)', // mockup uses 0.45; raised for legibility on the light background
+  textPrimary: '#223E35',
+  textSecondary: 'rgba(34, 62, 53, 0.74)',
+  textTertiary: 'rgba(34, 62, 53, 0.58)',
 
-  accentMatch: '#a3c481',
-  accentMatchSoft: 'rgba(163, 196, 129, 0.15)',
-  accentDanger: '#e27d60',
+  accentMatch: '#3D7A5F',
+  accentMatchSoft: 'rgba(61, 122, 95, 0.12)',
+  accentDanger: '#CF7153',
 
-  white05: 'rgba(255,255,255,0.05)',
-  white08: 'rgba(255,255,255,0.08)',
-  white10: 'rgba(255,255,255,0.1)',
-  white12: 'rgba(255,255,255,0.12)',
-  white15: 'rgba(255,255,255,0.15)',
-  black20: 'rgba(0,0,0,0.2)',
+  // Formerly translucent whites over dark glass; now deep-green tints over light surfaces.
+  white05: 'rgba(34,62,53,0.04)',
+  white08: 'rgba(34,62,53,0.06)',
+  white10: 'rgba(34,62,53,0.08)',
+  white12: 'rgba(34,62,53,0.10)',
+  white15: 'rgba(34,62,53,0.12)',
+  black20: 'rgba(34,62,53,0.07)', // inset tracks/boxes: a gentle green tint on light surfaces (was a black tint on dark glass)
   black30: 'rgba(0,0,0,0.3)',
 
-  primaryButtonBg: 'rgba(255,255,255,0.95)',
-  primaryButtonText: '#1a1a1a',
+  // Text/icons drawn over photos stay white (the page text tokens are dark green now)
+  onPhoto: '#FFFFFF',
+  onPhotoDim: 'rgba(255,255,255,0.78)',
+
+  primaryButtonBg: '#223E35',
+  primaryButtonText: '#FFFFFF',
 } as const;
 
 export const radius = {
-  panel: 40,
-  card: 28,
+  panel: 28,
+  card: 22,
   pill: 999,
   sm: 12,
 } as const;
@@ -57,22 +65,32 @@ export const fonts = {
   regular: 'Inter_400Regular',
   medium: 'Inter_500Medium',
   semibold: 'Inter_600SemiBold',
-  mono: 'JetBrainsMono_400Regular',
-  monoMedium: 'JetBrainsMono_500Medium',
+  mono: 'Inter_500Medium',
+  monoMedium: 'Inter_600SemiBold',
+  // Headlines (web uses the system Georgia, same face as the pitch deck)
+  serif: 'Georgia, "Times New Roman", serif',
 } as const;
 
 export const shadows = {
+  // Soft, green-tinted drop shadows so cards lift off the cream page.
   contact: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowColor: '#223E35',
+    shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.1,
-    shadowRadius: 12,
+    shadowRadius: 14,
   },
   ambient: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 24 },
-    shadowOpacity: 0.25,
-    shadowRadius: 24,
+    shadowColor: '#223E35',
+    shadowOffset: { width: 0, height: 14 },
+    shadowOpacity: 0.16,
+    shadowRadius: 30,
+  },
+  // The main kitchen card: the deepest shadow.
+  card: {
+    shadowColor: '#223E35',
+    shadowOffset: { width: 0, height: 16 },
+    shadowOpacity: 0.22,
+    shadowRadius: 34,
   },
 } as const;
 

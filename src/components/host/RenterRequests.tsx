@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     gap: 12,
     padding: 12,
     borderRadius: 16,
-    backgroundColor: 'rgba(255,255,255,0.04)',
+    backgroundColor: 'rgba(34,62,53,0.04)',
     borderWidth: 1,
     borderColor: colors.glassBorderDim,
   },

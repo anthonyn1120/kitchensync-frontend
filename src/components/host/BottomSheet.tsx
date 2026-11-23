@@ -66,7 +66,7 @@ export function BottomSheet({ visible, onClose, title, eyebrow, children }: Prop
           pointerEvents="box-none"
         >
           <Animated.View style={[styles.sheet, sheetStyle]}>
-            <BlurView intensity={60} tint="dark" style={StyleSheet.absoluteFill} />
+            <BlurView intensity={22} tint="light" style={StyleSheet.absoluteFill} />
             <View style={[StyleSheet.absoluteFill, styles.tint]} />
             <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.border]} />
             <GestureDetector gesture={pan}>
@@ -94,7 +94,7 @@ export function BottomSheet({ visible, onClose, title, eyebrow, children }: Prop
 }
 
 const styles = StyleSheet.create({
-  backdrop: { backgroundColor: 'rgba(0,0,0,0.45)' },
+  backdrop: { backgroundColor: 'rgba(34,62,53,0.32)' },
   kav: { flex: 1, justifyContent: 'flex-end' },
   sheet: {
     borderTopLeftRadius: 36,

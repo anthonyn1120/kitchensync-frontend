@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   hero: { alignItems: 'center', marginTop: 24, marginBottom: 32 },
   copy: { alignItems: 'center', marginBottom: 28 },
   score: { fontFamily: fonts.monoMedium, fontSize: 30, color: colors.textPrimary, marginBottom: 2 },
-  title: { fontFamily: fonts.medium, fontSize: 30, lineHeight: 36, letterSpacing: -0.9, color: colors.textPrimary, marginBottom: 8 },
+  title: { fontFamily: fonts.serif, fontWeight: '700', fontSize: 30, lineHeight: 36, letterSpacing: -0.4, color: colors.textPrimary, marginBottom: 8 },
   topCard: { flexDirection: 'row', alignItems: 'center', gap: 14, padding: 10, paddingRight: 18 },
   topPhoto: { width: 60, height: 60, borderRadius: 18 },
 });

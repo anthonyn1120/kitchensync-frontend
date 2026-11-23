@@ -46,7 +46,7 @@ function ToastView({ state }: { state: ToastState }) {
         exiting={FadeOutUp.duration(180)}
         style={styles.pill}
       >
-        <BlurView intensity={40} tint="dark" style={StyleSheet.absoluteFill} />
+        <BlurView intensity={22} tint="light" style={StyleSheet.absoluteFill} />
         <View style={[StyleSheet.absoluteFill, { backgroundColor: colors.glassBgPrimary }]} />
         <View style={styles.dot}>
           <Check size={12} color={colors.primaryButtonText} strokeWidth={3} />

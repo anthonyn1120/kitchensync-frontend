@@ -88,10 +88,10 @@ type Actions = {
 };
 
 const defaultRenterPrefs: RenterPreferences = {
-  businessName: 'Rise & Rye Bakehouse',
-  productCategories: ['baked'],
+  businessName: "Maya's Coffee Cart",
+  productCategories: ['beverage'],
   otherCategory: '',
-  equipment: ['Commercial Mixer', 'Deck Oven', 'Walk-in Fridge', 'Stainless Prep'],
+  equipment: ['Juice Press', 'Bottling Line', 'Walk-in Fridge', 'Stainless Prep'],
   certifications: ['ServSafe Manager'],
   allergens: ['Nut-Free'],
   days: ['Tue', 'Thu'],
@@ -99,17 +99,17 @@ const defaultRenterPrefs: RenterPreferences = {
   hoursPerWeek: 12,
   maxDistanceMiles: 5,
   budgetPerHour: 50,
-  zip: '11222',
+  zip: '98011',
 };
 
 const defaultHostSetup: HostSetup = {
-  facilityName: 'Brooklyn Baking Co.',
+  facilityName: 'Bothell Baking Co.',
   facilityType: 'bakery',
-  address: '118 Franklin St, Brooklyn, NY 11222',
+  address: '18120 Bothell Way NE, Bothell, WA 98011',
   listingSource: null,
   description: '',
   equipment: ['Deck Oven', 'Proofer', 'Walk-in Fridge', 'Commercial Mixer', 'Stainless Prep'],
-  certifications: ['NYC DOH Grade A', 'ServSafe Manager'],
+  certifications: ['King County Health Permit', 'ServSafe Manager'],
   allergenPolicies: ['Nut-Free'],
   days: ['Tue', 'Thu'],
   hours: '5:30 AM – 2:00 PM',

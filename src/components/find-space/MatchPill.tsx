@@ -16,11 +16,11 @@ export function MatchPill({ score, reason, onPress }: { score: number; reason: s
     >
       <BlurView intensity={30} tint="dark" style={StyleSheet.absoluteFill} />
       <View style={[StyleSheet.absoluteFill, { backgroundColor: colors.black30 }]} />
-      <MatchRing score={score} size={40} strokeWidth={3} />
+      <MatchRing score={score} size={40} strokeWidth={3} tone="photo" />
       <Text variant="bodySm" numberOfLines={1} style={styles.reason}>
         {reason}
       </Text>
-      {onPress && <ChevronRight size={14} color={colors.textSecondary} />}
+      {onPress && <ChevronRight size={14} color={colors.onPhotoDim} />}
     </Pressable>
   );
 }
@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
     paddingRight: 12,
     borderRadius: radius.pill,
     borderWidth: 1,
-    borderColor: colors.white15,
+    borderColor: 'rgba(255,255,255,0.25)',
     overflow: 'hidden',
   },
-  reason: { flex: 1, color: colors.textPrimary, fontSize: 12 },
+  reason: { flex: 1, color: colors.onPhoto, fontSize: 12 },
 });

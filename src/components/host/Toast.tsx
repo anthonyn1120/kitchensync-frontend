@@ -43,11 +43,11 @@ function ToastHost({ toast }: { toast: ToastState }) {
           style={styles.shadow}
         >
           <View style={styles.pill}>
-            <BlurView intensity={50} tint="dark" style={StyleSheet.absoluteFill} />
+            <BlurView intensity={22} tint="light" style={StyleSheet.absoluteFill} />
             <View style={[StyleSheet.absoluteFill, styles.tint]} />
             <View style={[styles.icon, toast.tone === 'info' && styles.iconInfo]}>
               {toast.tone === 'success' ? (
-                <Check size={13} color="#1a2a1a" strokeWidth={3} />
+                <Check size={13} color="#FFFFFF" strokeWidth={3} />
               ) : (
                 <Info size={13} color={colors.textPrimary} />
               )}
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     borderColor: colors.glassBorderDim,
     borderTopColor: colors.glassBorderLight,
   },
-  tint: { backgroundColor: 'rgba(30, 38, 30, 0.75)' },
+  tint: { backgroundColor: 'rgba(255, 255, 255, 0.95)' },
   icon: {
     width: 22,
     height: 22,

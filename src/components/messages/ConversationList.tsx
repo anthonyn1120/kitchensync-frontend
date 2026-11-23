@@ -191,6 +191,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  badgeText: { fontFamily: fonts.monoMedium, fontSize: 11, color: '#1a2a1a' },
+  badgeText: { fontFamily: fonts.monoMedium, fontSize: 11, color: '#FFFFFF' },
   quick: { marginTop: 10, paddingTop: 16, borderTopWidth: 1, borderTopColor: colors.glassBorderDim },
 });

@@ -70,8 +70,8 @@ export function BottomSheet({ visible, onClose, title, eyebrow, children, footer
             <Pressable style={{ flex: 1 }} onPress={onClose} accessibilityLabel="Close sheet" />
           </Animated.View>
           <Animated.View style={[styles.sheet, sheetStyle]}>
-            <BlurView intensity={50} tint="dark" style={StyleSheet.absoluteFill} />
-            <View style={[StyleSheet.absoluteFill, { backgroundColor: colors.glassBgPrimary }]} />
+            <BlurView intensity={22} tint="light" style={StyleSheet.absoluteFill} />
+            <View style={[StyleSheet.absoluteFill, { backgroundColor: colors.sheetBg }]} />
             <GestureDetector gesture={pan}>
               <View style={styles.handleArea}>
                 <View style={styles.handle} />
@@ -100,7 +100,7 @@ export function BottomSheet({ visible, onClose, title, eyebrow, children, footer
 }
 
 const styles = StyleSheet.create({
-  scrim: { backgroundColor: 'rgba(0,0,0,0.45)' },
+  scrim: { backgroundColor: 'rgba(34,62,53,0.32)' },
   sheet: {
     maxHeight: '88%',
     borderTopLeftRadius: radius.card,

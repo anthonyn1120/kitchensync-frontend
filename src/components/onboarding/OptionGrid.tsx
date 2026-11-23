@@ -70,7 +70,7 @@ function OptionCard<T extends string>({
     shadowOpacity: s.value * 0.15,
   }));
   const ring = useAnimatedStyle(() => ({
-    borderColor: interpolateColor(s.value, [0, 1], ['rgba(255,255,255,0.3)', colors.accentMatch]),
+    borderColor: interpolateColor(s.value, [0, 1], ['rgba(34,62,53,0.16)', colors.accentMatch]),
   }));
   const dot = useAnimatedStyle(() => ({ opacity: s.value, transform: [{ scale: 0.5 + s.value * 0.5 }] }));
   const inset = useAnimatedStyle(() => ({ opacity: s.value }));

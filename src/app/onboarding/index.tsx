@@ -16,12 +16,12 @@ export default function Splash() {
       <FadeUp stagger={1} style={styles.hero}>
         <View style={styles.brandIconShadow}>
           <LinearGradient
-            colors={['rgba(255,255,255,0.4)', 'rgba(255,255,255,0.1)']}
+            colors={[colors.primaryButtonBg, colors.primaryButtonBg]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.brandIcon}
           >
-            <Layers size={32} color={colors.textPrimary} strokeWidth={1.5} />
+            <Layers size={32} color="#FFFFFF" strokeWidth={1.75} />
           </LinearGradient>
         </View>
         <Text style={styles.title}>Kitchen Sync</Text>
@@ -56,14 +56,15 @@ const styles = StyleSheet.create({
     height: 64,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.3)',
+    borderColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
   },
   title: {
-    fontFamily: fonts.semibold,
-    fontSize: 36,
-    letterSpacing: -1.1,
+    fontFamily: fonts.serif,
+    fontWeight: '700',
+    fontSize: 38,
+    letterSpacing: -0.6,
     color: colors.textPrimary,
     marginBottom: 16,
   },

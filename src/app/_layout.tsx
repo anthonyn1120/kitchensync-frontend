@@ -1,6 +1,6 @@
 import 'react-native-reanimated';
 import { useEffect } from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
@@ -31,6 +31,22 @@ export default function RootLayout() {
   useEffect(() => {
     if (loaded) SplashScreen.hideAsync();
   }, [loaded]);
+
+  // Pitch deck: when the app runs inside the deck's phone frame, pass slide-navigation keys up to the deck,
+  // so the presenter's arrows / clicker still change slides after tapping in the phone. Never while typing.
+  useEffect(() => {
+    if (Platform.OS !== 'web' || typeof window === 'undefined' || window.top === window) return;
+    const NAV = ['ArrowRight', 'ArrowLeft', 'PageDown', 'PageUp', 'MediaTrackNext', 'MediaTrackPrevious', 'F5'];
+    const onKey = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey || e.altKey || !NAV.includes(e.key)) return;
+      const t = e.target as HTMLElement | null;
+      if (t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable)) return;
+      e.preventDefault();
+      window.top?.postMessage({ type: 'kitchensync-deck-key', key: e.key }, '*');
+    };
+    window.addEventListener('keydown', onKey, true);
+    return () => window.removeEventListener('keydown', onKey, true);
+  }, []);
 
   if (!loaded) return null;
 

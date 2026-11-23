@@ -56,7 +56,7 @@ export function RequestCard({ request, onOpen, onDecline, onApproved, approveSig
   const cardStyle = useAnimatedStyle(() => ({
     transform: [{ scale: lift.value }],
     borderColor: interpolateColor(success.value, [0, 1], [colors.glassBorderDim, 'rgba(163,196,129,0.6)']),
-    backgroundColor: interpolateColor(success.value, [0, 1], ['rgba(255,255,255,0.04)', 'rgba(163,196,129,0.14)']),
+    backgroundColor: interpolateColor(success.value, [0, 1], ['rgba(34,62,53,0.04)', 'rgba(61,122,95,0.12)']),
   }));
   const approveStyle = useAnimatedStyle(() => ({
     backgroundColor: interpolateColor(green.value, [0, 1], [colors.controlBg, colors.accentMatch]),
@@ -122,7 +122,7 @@ export function RequestCard({ request, onOpen, onDecline, onApproved, approveSig
   );
 }
 
-/** Check icon that crossfades from white to the dark #1a2a1a used on the green button. */
+/** Check icon that crossfades from white to the white used on the green button. */
 function ApproveIcon({ green }: { green: SharedValue<number> }) {
   const light = useAnimatedStyle(() => ({ opacity: 1 - green.value }));
   const dark = useAnimatedStyle(() => ({ opacity: green.value }));
@@ -132,7 +132,7 @@ function ApproveIcon({ green }: { green: SharedValue<number> }) {
         <Check size={18} color={colors.textPrimary} />
       </Animated.View>
       <Animated.View style={[StyleSheet.absoluteFill, dark]}>
-        <Check size={18} color="#1a2a1a" strokeWidth={2.5} />
+        <Check size={18} color="#FFFFFF" strokeWidth={2.5} />
       </Animated.View>
     </View>
   );

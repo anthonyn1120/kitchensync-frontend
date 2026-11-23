@@ -244,12 +244,12 @@ export function SwipeCard({
 
             <View style={styles.metaOverlay} pointerEvents="box-none">
               <View style={styles.badge}>
-                <Text variant="mono" color={listing.isNew ? colors.textPrimary : colors.textSecondary}>
+                <Text variant="mono" color={listing.isNew ? colors.accentMatch : colors.textSecondary}>
                   {listing.isNew ? 'New' : FACILITY_LABEL[listing.facilityType]}
                 </Text>
               </View>
               <View style={styles.topButtons}>
-                <IconButton onPress={onOpenDetail} size={40}>
+                <IconButton onPress={onOpenDetail} size={40} style={{ backgroundColor: 'rgba(255,255,255,0.92)', borderColor: 'transparent' }}>
                   <CirclePlus size={16} color={colors.textPrimary} strokeWidth={2} />
                 </IconButton>
               </View>
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.glassBorderDim,
     borderTopColor: colors.glassBorderLight,
-    ...shadows.contact,
+    ...shadows.card,
   },
   inner: { flex: 1, padding: 8 },
   photoArea: {
@@ -342,12 +342,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   badge: {
-    backgroundColor: colors.black30,
+    backgroundColor: 'rgba(255,255,255,0.92)',
     paddingVertical: 4,
     paddingHorizontal: 10,
     borderRadius: radius.pill,
-    borderWidth: 1,
-    borderColor: colors.white15,
   },
   topButtons: { flexDirection: 'row', gap: 8 },
   matchWrap: { position: 'absolute', left: 12, right: 12, bottom: 12 },
@@ -365,7 +363,7 @@ const styles = StyleSheet.create({
   stampText: { fontFamily: fonts.monoMedium, fontSize: 22, letterSpacing: 3 },
   info: { paddingHorizontal: 16, paddingTop: 20, paddingBottom: 16, gap: 14 },
   infoCompact: { paddingTop: 14, paddingBottom: 12, gap: 10 },
-  name: { fontFamily: fonts.medium, fontSize: 24, letterSpacing: -0.5, color: colors.textPrimary, marginBottom: 4 },
+  name: { fontFamily: fonts.serif, fontWeight: '700', fontSize: 24, letterSpacing: -0.3, color: colors.textPrimary, marginBottom: 4 },
   quote: { fontSize: 14, lineHeight: 21 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, maxHeight: 70, overflow: 'hidden' },
   chipsCompact: { maxHeight: 31 },

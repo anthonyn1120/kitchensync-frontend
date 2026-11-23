@@ -13,7 +13,7 @@ export function Toggle({ value, onChange }: { value: boolean; onChange: (v: bool
   }, [value, t]);
 
   const track = useAnimatedStyle(() => ({
-    backgroundColor: interpolateColor(t.value, [0, 1], ['rgba(255,255,255,0.1)', colors.accentMatch]),
+    backgroundColor: interpolateColor(t.value, [0, 1], ['rgba(34,62,53,0.14)', colors.accentMatch]),
   }));
   const knob = useAnimatedStyle(() => ({ transform: [{ translateX: t.value * 16 }] }));
 

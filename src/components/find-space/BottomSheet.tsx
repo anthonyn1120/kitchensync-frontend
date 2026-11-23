@@ -75,8 +75,8 @@ export function BottomSheet({ open, onClose, children, footer, header, maxHeight
           <Pressable style={StyleSheet.absoluteFill} onPress={onClose} accessibilityLabel="Close sheet" />
         </Animated.View>
         <Animated.View style={[styles.sheet, { maxHeight: height * maxHeightRatio }, sheetStyle]}>
-          <BlurView intensity={60} tint="dark" style={StyleSheet.absoluteFill} />
-          <View style={[StyleSheet.absoluteFill, { backgroundColor: colors.glassBgPrimary }]} />
+          <BlurView intensity={22} tint="light" style={StyleSheet.absoluteFill} />
+          <View style={[StyleSheet.absoluteFill, { backgroundColor: colors.sheetBg }]} />
           <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.border]} />
           <GestureDetector gesture={drag}>
             <View>
@@ -96,7 +96,7 @@ export function BottomSheet({ open, onClose, children, footer, header, maxHeight
 }
 
 const styles = StyleSheet.create({
-  backdrop: { backgroundColor: 'rgba(10, 15, 10, 0.45)' },
+  backdrop: { backgroundColor: 'rgba(34, 62, 53, 0.32)' },
   sheet: {
     position: 'absolute',
     left: 0,
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     borderTopColor: colors.glassBorderLight,
   },
   grabberWrap: { alignItems: 'center', paddingTop: 10, paddingBottom: 6 },
-  grabber: { width: 40, height: 5, borderRadius: 3, backgroundColor: 'rgba(255,255,255,0.3)' },
+  grabber: { width: 40, height: 5, borderRadius: 3, backgroundColor: 'rgba(34,62,53,0.22)' },
   footer: {
     flexDirection: 'row',
     gap: 12,

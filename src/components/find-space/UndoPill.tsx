@@ -17,8 +17,8 @@ export function UndoPill({ name, onUndo }: { name: string; onUndo: () => void })
         accessibilityLabel={`Undo pass on ${name}`}
         hitSlop={8}
       >
-        <BlurView intensity={40} tint="dark" style={StyleSheet.absoluteFill} />
-        <View style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(20,25,20,0.55)' }]} />
+        <BlurView intensity={22} tint="light" style={StyleSheet.absoluteFill} />
+        <View style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(255,255,255,0.9)' }]} />
         <Text variant="bodySm" numberOfLines={1} style={styles.name}>
           {`Passed ${name}`}
         </Text>

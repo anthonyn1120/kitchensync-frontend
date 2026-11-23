@@ -42,9 +42,9 @@ export function Text({ variant = 'body', color, weight, align, style, maxFontSiz
 }
 
 const styles = StyleSheet.create({
-  h1: { fontFamily: fonts.semibold, fontSize: 34, letterSpacing: -1, color: colors.textPrimary },
-  h2: { fontFamily: fonts.medium, fontSize: 28, lineHeight: 34, letterSpacing: -0.8, color: colors.textPrimary },
-  h3: { fontFamily: fonts.medium, fontSize: 22, letterSpacing: -0.4, color: colors.textPrimary },
+  h1: { fontFamily: fonts.serif, fontWeight: '700', fontSize: 34, letterSpacing: -0.5, color: colors.textPrimary },
+  h2: { fontFamily: fonts.serif, fontWeight: '700', fontSize: 28, lineHeight: 34, letterSpacing: -0.4, color: colors.textPrimary },
+  h3: { fontFamily: fonts.serif, fontWeight: '700', fontSize: 22, letterSpacing: -0.2, color: colors.textPrimary },
   title: { fontFamily: fonts.medium, fontSize: 16, letterSpacing: -0.2, color: colors.textPrimary },
   body: { fontFamily: fonts.regular, fontSize: 15, lineHeight: 22, color: colors.textSecondary },
   bodySm: { fontFamily: fonts.regular, fontSize: 13, lineHeight: 19, color: colors.textSecondary },

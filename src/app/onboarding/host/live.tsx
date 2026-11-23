@@ -40,7 +40,7 @@ export default function HostLive() {
       }}
     >
       <Animated.View style={[styles.check, checkStyle]}>
-        <Check size={28} color="#1a2a1a" strokeWidth={2.5} />
+        <Check size={28} color="#FFFFFF" strokeWidth={2.5} />
       </Animated.View>
 
       <FadeUp stagger={1} style={{ marginBottom: 32 }}>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 24,
   },
-  title: { fontFamily: fonts.medium, fontSize: 30, lineHeight: 36, letterSpacing: -0.9, color: colors.textPrimary, marginBottom: 12 },
+  title: { fontFamily: fonts.serif, fontWeight: '700', fontSize: 30, lineHeight: 36, letterSpacing: -0.4, color: colors.textPrimary, marginBottom: 12 },
   photo: { height: 160, borderRadius: radius.panel - 16, overflow: 'hidden', backgroundColor: colors.black20 },
   rateBadge: {
     position: 'absolute',

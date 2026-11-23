@@ -34,7 +34,7 @@ export default function HostBasics() {
       <FadeUp stagger={3}>
         <GlassInput
           label="Name"
-          placeholder="e.g. Brooklyn Baking Co."
+          placeholder="e.g. Bothell Baking Co."
           value={facilityName}
           onChangeText={(t) => updateHostSetup({ facilityName: t })}
           autoCapitalize="words"
@@ -44,7 +44,7 @@ export default function HostBasics() {
         />
         <GlassInput
           label="Address"
-          placeholder="118 Franklin St, Brooklyn, NY 11222"
+          placeholder="18120 Bothell Way NE, Bothell, WA 98011"
           value={address}
           onChangeText={(t) => updateHostSetup({ address: t })}
           autoCapitalize="words"

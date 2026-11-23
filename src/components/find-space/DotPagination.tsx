@@ -22,7 +22,7 @@ function Dot({ active }: { active: boolean }) {
   }, [active, t]);
   const style = useAnimatedStyle(() => ({
     width: 4 + t.value * 8,
-    backgroundColor: `rgba(255,255,255,${0.2 + t.value * 0.7})`,
+    backgroundColor: `rgba(34,62,53,${0.18 + t.value * 0.62})`,
   }));
   return <Animated.View style={[styles.dot, style]} />;
 }

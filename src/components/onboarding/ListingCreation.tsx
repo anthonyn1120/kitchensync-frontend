@@ -133,7 +133,7 @@ function MicButton({ recording, onPress }: { recording: boolean; onPress: () => 
       onPress={onPress}
       style={[styles.mic, look, press.style]}
     >
-      {recording ? <Square size={22} color="#1a2a1a" fill="#1a2a1a" /> : <Mic size={30} color={colors.textPrimary} strokeWidth={1.5} />}
+      {recording ? <Square size={22} color="#FFFFFF" fill="#FFFFFF" /> : <Mic size={30} color={colors.textPrimary} strokeWidth={1.5} />}
     </AnimatedPressable>
   );
 }

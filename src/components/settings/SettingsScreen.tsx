@@ -73,7 +73,7 @@ export function SettingsScreen({ side }: { side: Role }) {
 
 const styles = StyleSheet.create({
   header: { marginTop: 8, marginBottom: 24, gap: 4 },
-  h1: { fontFamily: fonts.medium, fontSize: 32, letterSpacing: -0.9, color: colors.textPrimary, marginBottom: 4 },
+  h1: { fontFamily: fonts.serif, fontWeight: '700', fontSize: 32, letterSpacing: -0.4, color: colors.textPrimary, marginBottom: 4 },
   profile: { flexDirection: 'row', alignItems: 'center', gap: 14, padding: 18 },
   name: { fontFamily: fonts.medium, fontSize: 17, color: colors.textPrimary },
   verified: {

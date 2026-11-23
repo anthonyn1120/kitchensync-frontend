@@ -26,7 +26,7 @@ export default function RenterLocation() {
       <FadeUp stagger={2}>
         <GlassInput
           label="ZIP code"
-          placeholder="11222"
+          placeholder="98011"
           value={zip}
           onChangeText={(t) => updateRenterPrefs({ zip: t.replace(/\D/g, '').slice(0, 5) })}
           keyboardType="number-pad"

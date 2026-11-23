@@ -11,12 +11,11 @@ import { colors, fonts } from '@/theme';
 /** "How will you use Kitchen Sync?" — picks the renter or host branch. */
 export default function RoleScreen() {
   const insets = useSafeAreaInsets();
-  const { setRole, updateRenterPrefs, updateHostSetup } = useAppState();
+  const { setRole, updateHostSetup } = useAppState();
 
   const chooseRenter = () => {
     setRole('renter');
-    // Required answers start blank so Continue is earned; the rest keep sensible defaults.
-    updateRenterPrefs({ productCategories: [], otherCategory: '', businessName: '' });
+    // Pitch demo: Maya's answers stay filled in (Beverages, Bothell ZIP) so it taps straight through.
     router.push('/onboarding/renter/product');
   };
 

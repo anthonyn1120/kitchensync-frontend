@@ -14,10 +14,12 @@ type Props = {
   size?: number;
   strokeWidth?: number;
   showLabel?: boolean;
+  /** 'photo' = drawn over a photo (white text, light track) */
+  tone?: 'page' | 'photo';
 };
 
 /** .match-ring / .match-score-mini — animated progress ring with the % in mono. */
-export function MatchRing({ score, size = 64, strokeWidth = 3, showLabel = true }: Props) {
+export function MatchRing({ score, size = 64, strokeWidth = 3, showLabel = true, tone = 'page' }: Props) {
   const r = (size - strokeWidth * 2) / 2;
   const c = 2 * Math.PI * r;
   const progress = useSharedValue(0);
@@ -34,7 +36,7 @@ export function MatchRing({ score, size = 64, strokeWidth = 3, showLabel = true 
   return (
     <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
       <Svg width={size} height={size} style={{ position: 'absolute', transform: [{ rotate: '-90deg' }] }}>
-        <Circle cx={size / 2} cy={size / 2} r={r} stroke="rgba(255,255,255,0.1)" strokeWidth={strokeWidth} fill="none" />
+        <Circle cx={size / 2} cy={size / 2} r={r} stroke={tone === 'photo' ? 'rgba(255,255,255,0.28)' : 'rgba(34,62,53,0.12)'} strokeWidth={strokeWidth} fill="none" />
         <AnimatedCircle
           cx={size / 2}
           cy={size / 2}
@@ -48,7 +50,7 @@ export function MatchRing({ score, size = 64, strokeWidth = 3, showLabel = true 
         />
       </Svg>
       {showLabel && (
-        <Text style={{ fontFamily: fonts.monoMedium, fontSize: size >= 60 ? 16 : 12, color: colors.textPrimary }}>
+        <Text style={{ fontFamily: fonts.monoMedium, fontSize: size >= 60 ? 16 : 12, color: tone === 'photo' ? colors.onPhoto : colors.textPrimary }}>
           {score}%
         </Text>
       )}

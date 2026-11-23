@@ -36,7 +36,7 @@ function Slot({ slot }: { slot: ScheduleSlot }) {
 }
 
 const styles = StyleSheet.create({
-  preview: { backgroundColor: 'rgba(0,0,0,0.15)', borderRadius: 20, padding: 16, gap: 12 },
+  preview: { backgroundColor: 'rgba(34,62,53,0.05)', borderRadius: 20, padding: 16, gap: 12 },
   slot: { flexDirection: 'row', gap: 12, padding: 12, backgroundColor: colors.white05, borderRadius: radius.sm },
   slotLive: { borderWidth: 1, borderColor: 'rgba(163,196,129,0.25)' },
   time: { width: 52, fontFamily: fonts.mono, fontSize: 13, color: colors.textTertiary, paddingTop: 1 },

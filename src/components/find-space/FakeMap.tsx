@@ -46,8 +46,8 @@ export function FakeMap({ coords, label, distance }: { coords: { x: number; y: n
               <Stop offset="1" stopColor={colors.accentMatch} stopOpacity={0} />
             </RadialGradient>
             <RadialGradient id="vignette" cx="50%" cy="50%" r="70%">
-              <Stop offset="0" stopColor="#fff" stopOpacity={0.05} />
-              <Stop offset="1" stopColor="#fff" stopOpacity={0} />
+              <Stop offset="0" stopColor="#223E35" stopOpacity={0.05} />
+              <Stop offset="1" stopColor="#223E35" stopOpacity={0} />
             </RadialGradient>
           </Defs>
 
@@ -59,20 +59,20 @@ export function FakeMap({ coords, label, distance }: { coords: { x: number; y: n
 
           <G rotation={-14} originX={w / 2} originY={HEIGHT / 2}>
             {minor.map((i) => (
-              <Line key={`v${i}`} x1={-60 + i * 22} y1={-80} x2={-60 + i * 22} y2={HEIGHT + 80} stroke="rgba(255,255,255,0.06)" strokeWidth={1} />
+              <Line key={`v${i}`} x1={-60 + i * 22} y1={-80} x2={-60 + i * 22} y2={HEIGHT + 80} stroke="rgba(34,62,53,0.07)" strokeWidth={1} />
             ))}
             {minor.map((i) => (
-              <Line key={`h${i}`} x1={-60} y1={-80 + i * 18} x2={w + 60} y2={-80 + i * 18} stroke="rgba(255,255,255,0.06)" strokeWidth={1} />
+              <Line key={`h${i}`} x1={-60} y1={-80 + i * 18} x2={w + 60} y2={-80 + i * 18} stroke="rgba(34,62,53,0.07)" strokeWidth={1} />
             ))}
             {/* Avenues */}
-            <Line x1={w * 0.3} y1={-80} x2={w * 0.3} y2={HEIGHT + 80} stroke="rgba(255,255,255,0.13)" strokeWidth={3} />
-            <Line x1={w * 0.72} y1={-80} x2={w * 0.72} y2={HEIGHT + 80} stroke="rgba(255,255,255,0.13)" strokeWidth={3} />
-            <Line x1={-60} y1={HEIGHT * 0.62} x2={w + 60} y2={HEIGHT * 0.62} stroke="rgba(255,255,255,0.13)" strokeWidth={3} />
+            <Line x1={w * 0.3} y1={-80} x2={w * 0.3} y2={HEIGHT + 80} stroke="rgba(34,62,53,0.14)" strokeWidth={3} />
+            <Line x1={w * 0.72} y1={-80} x2={w * 0.72} y2={HEIGHT + 80} stroke="rgba(34,62,53,0.14)" strokeWidth={3} />
+            <Line x1={-60} y1={HEIGHT * 0.62} x2={w + 60} y2={HEIGHT * 0.62} stroke="rgba(34,62,53,0.14)" strokeWidth={3} />
             {/* Park block */}
             <Rect x={w * 0.52} y={HEIGHT * 0.66} width={w * 0.16} height={HEIGHT * 0.32} rx={4} fill="rgba(163,196,129,0.12)" />
           </G>
           {/* Diagonal boulevard */}
-          <Line x1={w * 0.1} y1={HEIGHT} x2={w} y2={HEIGHT * 0.05} stroke="rgba(255,255,255,0.1)" strokeWidth={4} />
+          <Line x1={w * 0.1} y1={HEIGHT} x2={w} y2={HEIGHT * 0.05} stroke="rgba(34,62,53,0.12)" strokeWidth={4} />
           <Rect x={0} y={0} width={w} height={HEIGHT} fill="url(#vignette)" />
 
           {/* Pin */}
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   tag: {
-    backgroundColor: 'rgba(0,0,0,0.35)',
+    backgroundColor: 'rgba(255,255,255,0.88)',
     borderRadius: 999,
     borderWidth: 1,
     borderColor: colors.white10,

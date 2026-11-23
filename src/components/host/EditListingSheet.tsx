@@ -34,7 +34,7 @@ export function EditListingSheet({ visible, onClose, rate, description, active, 
   const step = (d: number) => setDraftRate((r) => Math.min(250, Math.max(15, r + d)));
 
   return (
-    <BottomSheet visible={visible} onClose={onClose} eyebrow="Brooklyn Baking Co. Main" title="Edit Listing">
+    <BottomSheet visible={visible} onClose={onClose} eyebrow="Bothell Baking Co. Main" title="Edit Listing">
       <View style={{ gap: 20 }}>
         <View style={styles.row}>
           <View style={{ flex: 1 }}>

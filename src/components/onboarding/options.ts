@@ -152,11 +152,11 @@ export const hourPresets = [
 
 /** Canned "voice description" the fake recorder transcribes live. */
 export const voiceScript =
-  "Hi, this is Brooklyn Baking Co. on Franklin Street in Greenpoint. We're a twenty-two hundred square foot bakery with two deck ovens, a proofer, a sixty-quart commercial mixer, a walk-in fridge and about twenty feet of stainless prep. The space is open to renters Tuesdays and Thursdays from five-thirty in the morning until two. We're a strictly nut-free facility, Grade A from the health department, and our lead baker is ServSafe certified.";
+  "Hi, this is Bothell Baking Co. on Bothell Way in downtown Bothell. We're a twenty-two hundred square foot bakery with two deck ovens, a proofer, a sixty-quart commercial mixer, a walk-in fridge and about twenty feet of stainless prep. The space is open to renters Tuesdays and Thursdays from five-thirty in the morning until two. We're a strictly nut-free facility, fully permitted by King County Public Health, and our lead baker is ServSafe certified.";
 
 /** Listing description the "LLM" writes from the voice note or documents. */
 export const generatedDescription =
-  'Bright 2,200 sq ft Greenpoint bakery with two deck ovens, a proofer, a 60qt mixer, walk-in cold storage and 20 ft of stainless prep. Open to renters Tue & Thu, 5:30 AM – 2:00 PM. Strictly nut-free, NYC DOH Grade A.';
+  'Bright 2,200 sq ft downtown Bothell bakery with two deck ovens, a proofer, a 60qt mixer, walk-in cold storage and 20 ft of stainless prep. Open to renters Tue & Thu, 5:30 AM – 2:00 PM. Strictly nut-free, King County Health Permit.';
 
 /** Placeholder files for the "Use sample files" shortcut (matches the host's documents in mock data). */
-export const sampleDocuments = ['DOH Inspection Report.pdf', 'Equipment List 2026.pdf', 'Certificate of Occupancy.pdf'];
+export const sampleDocuments = ['King County Inspection Report.pdf', 'Equipment List 2026.pdf', 'Certificate of Occupancy.pdf'];

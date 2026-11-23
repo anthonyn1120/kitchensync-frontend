@@ -70,12 +70,12 @@ export function RequestBanner({ request, onApprove, onView, onDismissed, autoHid
       <GestureDetector gesture={pan}>
         <Animated.View style={[styles.shadow, style]} accessibilityLiveRegion="polite">
           <View style={styles.card}>
-            <BlurView intensity={60} tint="dark" style={StyleSheet.absoluteFill} />
+            <BlurView intensity={22} tint="light" style={StyleSheet.absoluteFill} />
             <View style={[StyleSheet.absoluteFill, styles.tint]} />
 
             <View style={styles.meta}>
               <View style={styles.appIcon}>
-                <Inbox size={11} color="#1a2a1a" strokeWidth={2.5} />
+                <Inbox size={11} color="#FFFFFF" strokeWidth={2.5} />
               </View>
               <Text variant="monoSm" color={colors.textSecondary}>New request</Text>
               <Text variant="monoSm" style={{ marginLeft: 'auto' }}>now</Text>
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     borderColor: colors.glassBorderDim,
     borderTopColor: colors.glassBorderLight,
   },
-  tint: { backgroundColor: 'rgba(30, 38, 30, 0.78)' },
+  tint: { backgroundColor: 'rgba(255, 255, 255, 0.95)' },
   meta: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   appIcon: {
     width: 20,

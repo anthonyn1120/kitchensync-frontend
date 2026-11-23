@@ -102,10 +102,11 @@ const styles = StyleSheet.create({
   headerWrap: { paddingHorizontal: 20 },
   titleBlock: { marginBottom: 32 },
   title: {
-    fontFamily: fonts.medium,
+    fontFamily: fonts.serif,
+    fontWeight: '700',
     fontSize: 30,
     lineHeight: 36,
-    letterSpacing: -0.9,
+    letterSpacing: -0.4,
     color: colors.textPrimary,
     marginBottom: 12,
   },
