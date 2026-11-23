@@ -39,3 +39,14 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# presentation demo build
+presentation/batchmatch-demo/
+.vercel/
+
+# local scratch, not part of the app
+practice
+practice.cpp
+practice.dSYM/
+.vscode/
+presentation/demo-site/
