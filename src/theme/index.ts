@@ -3,10 +3,10 @@
 export const colors = {
   // Soft-matte look: cream page, deep forest green, terracotta accents. Panels are a light, barely-frosted
   // white instead of dark glass, so the old "glass" tokens keep their names but hold soft-light values.
-  envBg: '#F7F7F3',
-  envBlob1: '#D3E2D6', // sage mist
-  envBlob2: '#E6EEE7', // pale sage
-  envBlob3: '#F3E5DA', // warm clay tint
+  envBg: '#000000',
+  envBlob1: '#000000', // sage mist
+  envBlob2: '#000000', // pale sage
+  envBlob3: '#000000', // warm clay tint
 
   glassBgPrimary: 'rgba(255, 255, 255, 0.82)',
   glassBgSecondary: 'rgba(232, 239, 233, 0.88)',

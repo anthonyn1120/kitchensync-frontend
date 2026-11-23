@@ -16,7 +16,7 @@ export default function Splash() {
       <FadeUp stagger={1} style={styles.hero}>
         <View style={styles.brandIconShadow}>
           <LinearGradient
-            colors={[colors.primaryButtonBg, colors.primaryButtonBg]}
+            colors={['#808080', '#808080']}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.brandIcon}
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 38,
     letterSpacing: -0.6,
-    color: colors.textPrimary,
+    color: '#808080',
     marginBottom: 16,
   },
 });
