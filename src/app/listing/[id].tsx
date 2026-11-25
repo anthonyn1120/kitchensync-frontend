@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { Image } from 'expo-image';
 import { router, useLocalSearchParams } from 'expo-router';
 import { BadgeCheck, CalendarCheck, Info, MessageSquare, Snowflake } from 'lucide-react-native';
@@ -35,13 +35,13 @@ export default function ListingDetail() {
     <FlowScreen
       eyebrow={listing.kind}
       footer={
-        <View style={styles.cta}>
-          <Pressable accessibilityRole="button" accessibilityLabel="Message" onPress={() => router.push(`/message?id=${listing.id}`)} style={styles.msg}>
-            <MessageSquare size={20} color={colors.textPrimary} />
-          </Pressable>
-          <PillButton label="Request to book" size="lg" style={styles.ctaBtn} onPress={() => router.push(`/request?id=${listing.id}`)} />
-          <PillButton label="Book a free tour" variant="primary" size="lg" style={styles.ctaBtn} onPress={() => router.push(`/tour?id=${listing.id}`)} />
-        </View>
+        <>
+          <PillButton label="Book a free tour" variant="primary" size="lg" fullWidth onPress={() => router.push(`/tour?id=${listing.id}`)} />
+          <View style={styles.cta}>
+            <PillButton label="Message" size="md" style={styles.ctaBtn} icon={<MessageSquare size={16} color={colors.textPrimary} />} onPress={() => router.push(`/message?id=${listing.id}`)} />
+            <PillButton label="Request to book" size="md" style={styles.ctaBtn} onPress={() => router.push(`/request?id=${listing.id}`)} />
+          </View>
+        </>
       }
     >
       {real ? (
@@ -218,7 +218,6 @@ const styles = StyleSheet.create({
   total: { fontFamily: fonts.semibold, fontSize: 19, lineHeight: 25, color: colors.textPrimary },
   cert: { paddingHorizontal: 10, paddingVertical: 6, borderRadius: 999, backgroundColor: colors.controlBg },
   certText: { fontFamily: fonts.medium, fontSize: 13, lineHeight: 17, color: colors.textSecondary },
-  msg: { width: 52, height: 52, borderRadius: 26, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: colors.controlBorder, alignItems: 'center', justifyContent: 'center' },
   ctaBtn: { flex: 1, paddingHorizontal: 8 },
   galleryScroll: { marginHorizontal: -20, marginBottom: 16, flexGrow: 0 },
   gallery: { paddingHorizontal: 20, gap: 10 },
