@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 
 /** Step counts for the "Step N of M" labels. */
 export const RENTER_STEPS = 2;
-export const HOST_STEPS = 4;
+export const HOST_STEPS = 2;
 
 /** "Sharpen your results" (requirements → standards → schedule), entered from Find Space. */
 export const REFINE_STEPS = 3;

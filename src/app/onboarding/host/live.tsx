@@ -12,7 +12,7 @@ import { StepScreen } from '@/components/onboarding/StepScreen';
 import { FadeUp } from '@/components/onboarding/FadeUp';
 import { ease } from '@/components/onboarding/Motion';
 import { facilityLabel } from '@/components/onboarding/options';
-import { hostListing } from '@/data/mock';
+import { photos } from '@/data/demo';
 import { useAppState } from '@/store/AppState';
 import { colors, fonts, radius } from '@/theme';
 
@@ -44,14 +44,14 @@ export default function HostLive() {
       </Animated.View>
 
       <FadeUp stagger={1} style={{ marginBottom: 32 }}>
-        <Text style={styles.title}>You’re live</Text>
-        <Text variant="body">Food brands nearby can now find {name}. We’ll let you know when a request comes in.</Text>
+        <Text style={styles.title}>Your idle hours are listed</Text>
+        <Text variant="body">Food businesses nearby can now find {name}. You approve every tour and booking. (Sample listing, demo only.)</Text>
       </FadeUp>
 
       <FadeUp stagger={2}>
         <GlassPanel radius={radius.panel - 8} contentStyle={{ padding: 8 }}>
           <View style={styles.photo}>
-            <Image source={{ uri: hostListing.photo }} style={StyleSheet.absoluteFill} contentFit="cover" transition={200} />
+            <Image source={photos.nvcKitchen} style={StyleSheet.absoluteFill} contentFit="cover" contentPosition={{ top: '62%' }} transition={200} />
             <LinearGradient colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.35)']} style={StyleSheet.absoluteFill} />
             <View style={styles.rateBadge}>
               <Text style={{ fontFamily: fonts.monoMedium, fontSize: 13, color: colors.primaryButtonText }}>${ratePerHour}/hr</Text>

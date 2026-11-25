@@ -18,11 +18,11 @@ export default function HostBasics() {
       step={1}
       total={HOST_STEPS}
       title="Tell us about your space"
-      subtitle="Renters search by type first, so start there."
+      subtitle="Pre-filled with a sample kitchen. Change anything."
       canContinue={canContinue}
       onContinue={() => {
         updateHostSetup({ facilityName: facilityName.trim(), address: address.trim() });
-        router.push('/onboarding/host/listing');
+        router.push('/onboarding/host/availability');
       }}
     >
       <FadeUp stagger={2}>
@@ -34,7 +34,7 @@ export default function HostBasics() {
       <FadeUp stagger={3}>
         <GlassInput
           label="Name"
-          placeholder="e.g. Bothell Baking Co."
+          placeholder="e.g. Community hall kitchen"
           value={facilityName}
           onChangeText={(t) => updateHostSetup({ facilityName: t })}
           autoCapitalize="words"
@@ -44,7 +44,7 @@ export default function HostBasics() {
         />
         <GlassInput
           label="Address"
-          placeholder="18120 Bothell Way NE, Bothell, WA 98011"
+          placeholder="Street, city, ZIP"
           value={address}
           onChangeText={(t) => updateHostSetup({ address: t })}
           autoCapitalize="words"

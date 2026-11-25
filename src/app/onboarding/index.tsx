@@ -25,8 +25,8 @@ export default function Splash() {
           </LinearGradient>
         </View>
         <Text style={styles.title}>Kitchen Sync</Text>
-        <Text variant="body" align="center" style={{ maxWidth: 260 }}>
-          The marketplace for commercial food production space.
+        <Text variant="body" align="center" style={{ maxWidth: 280, fontSize: 17, lineHeight: 25 }}>
+          Book licensed kitchen time by the hour. No lease.
         </Text>
       </FadeUp>
 
@@ -39,8 +39,8 @@ export default function Splash() {
           onPress={() => router.push('/onboarding/role')}
           iconRight={<ArrowRight size={18} color={colors.primaryButtonText} />}
         />
-        <Text variant="mono" align="center" style={{ marginTop: 24, opacity: 0.6 }}>
-          Version 2.0.1
+        <Text variant="bodySm" align="center" style={{ marginTop: 20 }}>
+          Prototype. Listings are sample data.
         </Text>
       </FadeUp>
     </View>

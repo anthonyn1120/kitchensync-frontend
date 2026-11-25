@@ -1,175 +1,72 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { View } from 'react-native';
-import { LinearTransition } from 'react-native-reanimated';
-import Animated from '@/components/ui/Animated';
+import { StyleSheet, View } from 'react-native';
+import { Image } from 'expo-image';
 import { router } from 'expo-router';
-import * as Haptics from 'expo-haptics';
-import { PageTitle, Screen, Text } from '@/components/ui';
-import {
-  BookingDetailSheet,
-  GuidelinesSheet,
-  PastItem,
-  SegmentedControl,
-  UpcomingHero,
-  UpcomingRow,
-  useToast,
-} from '@/components/bookings';
-import { isUpcoming, sortTime } from '@/components/bookings/dates';
-import { BookingFlowSheet } from '@/components/booking-flow';
+import { PillButton, Screen, Text } from '@/components/ui';
+import { Card, NoPhoto } from '@/components/demo/ui';
+import { getDemoListing } from '@/data/demo';
 import { useAppState } from '@/store/AppState';
-import type { Booking } from '@/data/types';
-import { enterUp, STAGGER } from '@/components/ui/motion';
+import { colors, fonts, radius } from '@/theme';
 
-type Tab = 'upcoming' | 'past';
-
-const fadeUp = (i: number) => enterUp(60 + i * STAGGER);
-const layout = LinearTransition.duration(240);
-
-export default function BookingsScreen() {
-  const { bookings, conversations } = useAppState();
-  const [tab, setTab] = useState<Tab>('upcoming');
-  const [guidelines, setGuidelines] = useState(false);
-  const [selected, setSelected] = useState<Booking | null>(null);
-  const [ratings, setRatings] = useState<Record<string, number>>({});
-  const [again, setAgain] = useState<{ listingId: string; open: boolean } | null>(null);
-  const toast = useToast();
-
-
-  const upcoming = useMemo(
-    () =>
-      bookings
-        .filter((b) => (b.status === 'confirmed' || b.status === 'pending') && isUpcoming(b.date))
-        .sort((a, b) => sortTime(a.date, a.time) - sortTime(b.date, b.time)),
-    [bookings],
-  );
-  const past = useMemo(
-    () =>
-      bookings
-        .filter((b) => !upcoming.includes(b))
-        .sort((a, b) => sortTime(b.date, b.time) - sortTime(a.date, a.time)),
-    [bookings, upcoming],
-  );
-  // Soonest confirmed session leads; everything else upcoming is listed under it.
-  const hero = upcoming.find((b) => b.status === 'confirmed');
-  const others = upcoming.filter((b) => b !== hero);
-
-  // A request the host just confirmed: one success tick and a short note.
-  const prevStatus = useRef<Record<string, Booking['status']>>({});
-  useEffect(() => {
-    for (const b of bookings) {
-      if (prevStatus.current[b.id] === 'pending' && b.status === 'confirmed') {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-        toast.show(`${b.hostName.split(' ')[0]} confirmed your session`);
-      }
-    }
-    prevStatus.current = Object.fromEntries(bookings.map((b) => [b.id, b.status]));
-  }, [bookings]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Keep the open detail sheet in sync when its booking changes (e.g. pending → confirmed).
-  const shownSelected = selected ? bookings.find((b) => b.id === selected.id) ?? selected : null;
-
-  const openConversation = (b: Booking) => {
-    const c = conversations.renter.find((x) => x.listingId === b.listingId);
-    router.push(c ? `/renter/messages/${c.id}` : '/renter/messages');
-  };
+/** Requests tab: the booking and tour requests sent in this session. */
+export default function Requests() {
+  const { demoRequests } = useAppState();
 
   return (
-    <View style={{ flex: 1 }}>
-      <Screen withTabBar scroll>
-        <PageTitle eyebrow="Renter Mode" title="Bookings" />
+    <Screen withTabBar scroll>
+      <Text style={styles.title}>Requests</Text>
+      <Text style={styles.sub}>Bookings and tours you’ve asked for.</Text>
 
-        <SegmentedControl<Tab>
-          value={tab}
-          onChange={setTab}
-          options={[
-            { value: 'upcoming', label: 'Upcoming', count: upcoming.length },
-            { value: 'past', label: 'Past', count: past.length },
-          ]}
-        />
-
-        {tab === 'upcoming' ? (
-          <View key="upcoming" style={{ marginTop: 28 }}>
-            <Animated.View entering={fadeUp(0)} layout={layout}>
-              <Text variant="mono" style={{ marginBottom: 16 }}>
-                Upcoming Session
-              </Text>
-              {hero ? (
-                <Animated.View key={hero.id} entering={enterUp(0)}>
-                  <UpcomingHero
-                    booking={hero}
-                    onMessage={() => openConversation(hero)}
-                    onCopyCode={() => toast.show('Copied')}
-                    onGuidelines={() => setGuidelines(true)}
-                    onDirections={() => toast.show('Opening directions in Maps')}
-                    onCalendar={() => toast.show('Added to Calendar')}
-                  />
-                </Animated.View>
-              ) : (
-                <Text variant="body">No confirmed sessions yet.</Text>
-              )}
-            </Animated.View>
-
-            {others.length > 0 && (
-              <Animated.View entering={fadeUp(1)} layout={layout} style={{ marginTop: 32 }}>
-                <Text variant="mono" style={{ marginBottom: 16 }}>
-                  Also Coming Up
-                </Text>
-                <View style={{ gap: 12 }}>
-                  {others.map((b) => (
-                    <Animated.View key={b.id} entering={enterUp(0)} layout={layout}>
-                      <UpcomingRow booking={b} onPress={() => setSelected(b)} />
-                    </Animated.View>
-                  ))}
+      {demoRequests.length === 0 ? (
+        <Card style={{ gap: 14, alignItems: 'flex-start' }}>
+          <Text style={styles.empty}>Nothing yet. Find a kitchen and book an hour or two, or ask for a tour.</Text>
+          <PillButton label="Find kitchens" variant="primary" onPress={() => router.replace('/renter/find-space')} />
+        </Card>
+      ) : (
+        <View style={{ gap: 12 }}>
+          {demoRequests.map((r) => {
+            const l = getDemoListing(r.listingId);
+            if (!l) return null;
+            return (
+              <Card key={r.id} onPress={() => router.push(`/listing/${l.id}`)} style={styles.card}>
+                {l.photos[0] ? (
+                  <Image source={l.photos[0].src} style={styles.thumb} contentFit="cover" contentPosition={{ top: '62%' }} />
+                ) : (
+                  <View style={{ width: 64 }}>
+                    <NoPhoto height={64} />
+                  </View>
+                )}
+                <View style={{ flex: 1, gap: 2 }}>
+                  <View style={styles.status}>
+                    <Text style={styles.statusText}>{r.mode === 'tour' ? 'Tour requested' : 'Booking requested'}</Text>
+                  </View>
+                  <Text style={styles.name}>{l.name}</Text>
+                  <Text style={styles.small}>
+                    {r.date} · {r.time}
+                  </Text>
+                  {r.mode === 'book' && (
+                    <Text style={styles.small}>
+                      {r.hours} hr{r.hours > 1 ? 's' : ''}
+                      {r.coldStorage ? ' + cold storage' : ''} · ${r.total} (sample price)
+                    </Text>
+                  )}
                 </View>
-              </Animated.View>
-            )}
-          </View>
-        ) : (
-          <View key="past" style={{ marginTop: 28 }}>
-            <Animated.View entering={fadeUp(0)}>
-              <Text variant="mono" style={{ marginBottom: 16 }}>
-                Past Sessions
-              </Text>
-            </Animated.View>
-            <View style={{ gap: 12 }}>
-              {past.map((b, i) => (
-                <Animated.View key={b.id} entering={fadeUp(i + 1)}>
-                  <PastItem booking={b} onPress={() => setSelected(b)} />
-                </Animated.View>
-              ))}
-            </View>
-          </View>
-        )}
-      </Screen>
-
-      {hero && <GuidelinesSheet visible={guidelines} onClose={() => setGuidelines(false)} facilityName={hero.facilityName} />}
-
-      <BookingDetailSheet
-        booking={shownSelected}
-        onClose={() => setSelected(null)}
-        ratings={ratings}
-        onRate={(id, n) => setRatings((r) => ({ ...r, [id]: n }))}
-        onBookAgain={(b) => {
-          setSelected(null);
-          // Let the receipt finish closing before the booking sheet rises.
-          setTimeout(() => setAgain({ listingId: b.listingId, open: true }), 260);
-        }}
-        onMessageHost={(b) => {
-          setSelected(null);
-          openConversation(b);
-        }}
-      />
-
-      {again && (
-        <BookingFlowSheet
-          listingId={again.listingId}
-          visible={again.open}
-          onClose={() => setAgain((a) => (a ? { ...a, open: false } : a))}
-          onBooked={() => setTab('upcoming')}
-        />
+              </Card>
+            );
+          })}
+        </View>
       )}
-
-      {toast.node}
-    </View>
+    </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  title: { fontFamily: fonts.serif, fontWeight: '700', fontSize: 30, lineHeight: 36, letterSpacing: -0.4, color: colors.textPrimary, marginTop: 6 },
+  sub: { fontFamily: fonts.regular, fontSize: 15.5, lineHeight: 22, color: colors.textSecondary, marginTop: 6, marginBottom: 18 },
+  empty: { fontFamily: fonts.regular, fontSize: 15.5, lineHeight: 22, color: colors.textSecondary },
+  card: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 12 },
+  thumb: { width: 64, height: 64, borderRadius: 16, backgroundColor: colors.black20 },
+  status: { alignSelf: 'flex-start', paddingHorizontal: 9, paddingVertical: 3, borderRadius: radius.pill, backgroundColor: colors.accentMatchSoft, marginBottom: 2 },
+  statusText: { fontFamily: fonts.semibold, fontSize: 11.5, lineHeight: 16, color: colors.accentMatch },
+  name: { fontFamily: fonts.semibold, fontSize: 16, lineHeight: 21, color: colors.textPrimary },
+  small: { fontFamily: fonts.regular, fontSize: 13.5, lineHeight: 19, color: colors.textSecondary },
+});

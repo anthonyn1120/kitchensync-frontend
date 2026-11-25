@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useCallback, useContext, useMemo, useRef, useState } from 'react';
 import { bookings as mockBookings, getListing, hostConversations, renterConversations, renterRequests } from '@/data/mock';
 import { estimateCost } from '@/data/matching';
+import { defaultNeeds, defaultPermit, defaultReady, type DemoRequest, type Needs, type PermitAnswers } from '@/data/demo';
 import type { Booking, Conversation, FacilityType, ProductCategory, RenterRequest, Role, Weekday } from '@/data/types';
 
 // In-memory app state shared across screens. Resets on reload — swap for the
@@ -58,6 +59,13 @@ type AppState = {
   requests: RenterRequest[];
 
   notifications: { matches: boolean; bookings: boolean; marketing: boolean };
+
+  // Pitch demo (renter side): what Tres is searching for, the requests it has sent, and its permit checklist.
+  needs: Needs;
+  demoRequests: DemoRequest[];
+  ready: string[];
+  permit: PermitAnswers;
+  shortlist: string[];
 };
 
 type Actions = {
@@ -85,11 +93,19 @@ type Actions = {
   markRead: (side: Role, conversationId: string) => void;
   setRequestStatus: (requestId: string, status: RenterRequest['status']) => void;
   setNotification: (key: keyof AppState['notifications'], value: boolean) => void;
+  updateNeeds: (patch: Partial<Needs>) => void;
+  updatePermit: (patch: Partial<PermitAnswers>) => void;
+  toggleShortlist: (id: string) => void;
+  /** Send a booking or tour request; returns its id. */
+  sendDemoRequest: (input: Omit<DemoRequest, 'id'>) => string;
+  toggleReady: (id: string) => void;
+  /** Back to a clean slate for the next run-through of the demo. */
+  restartDemo: () => void;
 };
 
 const defaultRenterPrefs: RenterPreferences = {
-  businessName: "Maya's Coffee Cart",
-  productCategories: ['beverage'],
+  businessName: 'Wanola Granola',
+  productCategories: ['baked'],
   otherCategory: '',
   equipment: ['Juice Press', 'Bottling Line', 'Walk-in Fridge', 'Stainless Prep'],
   certifications: ['ServSafe Manager'],
@@ -99,21 +115,21 @@ const defaultRenterPrefs: RenterPreferences = {
   hoursPerWeek: 12,
   maxDistanceMiles: 5,
   budgetPerHour: 50,
-  zip: '98011',
+  zip: '98074',
 };
 
 const defaultHostSetup: HostSetup = {
-  facilityName: 'Bothell Baking Co.',
-  facilityType: 'bakery',
-  address: '18120 Bothell Way NE, Bothell, WA 98011',
+  facilityName: 'Sample commissary kitchen',
+  facilityType: 'commissary',
+  address: 'Seattle, WA',
   listingSource: null,
   description: '',
-  equipment: ['Deck Oven', 'Proofer', 'Walk-in Fridge', 'Commercial Mixer', 'Stainless Prep'],
-  certifications: ['King County Health Permit', 'ServSafe Manager'],
-  allergenPolicies: ['Nut-Free'],
-  days: ['Tue', 'Thu'],
-  hours: '5:30 AM – 2:00 PM',
-  ratePerHour: 45,
+  equipment: ['Stainless Prep', 'Walk-in Fridge', 'Convection Oven', 'Dry Storage'],
+  certifications: ['King County Health Permit'],
+  allergenPolicies: [],
+  days: ['Mon', 'Tue', 'Wed'],
+  hours: '6:00 AM – 12:00 PM',
+  ratePerHour: 40,
 };
 
 /** Make sure the renter has a conversation with this listing's host. */
@@ -148,6 +164,11 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     conversations: { renter: renterConversations, host: hostConversations },
     requests: renterRequests,
     notifications: { matches: true, bookings: true, marketing: false },
+    needs: defaultNeeds,
+    demoRequests: [],
+    ready: defaultReady,
+    permit: defaultPermit,
+    shortlist: [],
   });
 
   // Latest state for actions that need to return a value synchronously.
@@ -250,6 +271,28 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       setRequestStatus: (id, status) =>
         patch((s) => ({ requests: s.requests.map((r) => (r.id === id ? { ...r, status } : r)) })),
       setNotification: (key, value) => patch((s) => ({ notifications: { ...s.notifications, [key]: value } })),
+      updateNeeds: (p) => patch((s) => ({ needs: { ...s.needs, ...p } })),
+      updatePermit: (p) => patch((s) => ({ permit: { ...s.permit, ...p } })),
+      toggleShortlist: (id) => patch((s) => ({ shortlist: s.shortlist.includes(id) ? s.shortlist.filter((x) => x !== id) : [...s.shortlist, id] })),
+      sendDemoRequest: (input) => {
+        const id = `q${Date.now()}`;
+        patch((s) => ({ demoRequests: [{ ...input, id }, ...s.demoRequests] }));
+        return id;
+      },
+      toggleReady: (id) => patch((s) => ({ ready: s.ready.includes(id) ? s.ready.filter((x) => x !== id) : [...s.ready, id] })),
+      restartDemo: () =>
+        patch(() => ({
+          role: null,
+          onboarded: false,
+          renterPrefs: defaultRenterPrefs,
+          hostSetup: defaultHostSetup,
+          needs: defaultNeeds,
+          demoRequests: [],
+          ready: defaultReady,
+          permit: defaultPermit,
+          shortlist: [],
+          requests: renterRequests,
+        })),
     }),
     [patch],
   );

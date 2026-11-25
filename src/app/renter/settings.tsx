@@ -1,5 +1,5 @@
-import { SettingsScreen } from '@/components/settings';
+import { Profile } from '@/components/demo/Profile';
 
-export default function RenterSettings() {
-  return <SettingsScreen side="renter" />;
+export default function RenterProfile() {
+  return <Profile side="renter" />;
 }

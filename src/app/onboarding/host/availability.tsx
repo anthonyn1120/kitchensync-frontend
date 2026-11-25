@@ -18,7 +18,7 @@ export default function HostAvailability() {
 
   return (
     <StepScreen
-      step={4}
+      step={2}
       total={HOST_STEPS}
       title="When can renters book?"
       subtitle="Open only the time you’d leave idle. You approve every booking."
@@ -54,8 +54,8 @@ export default function HostAvailability() {
         />
         <Text variant="bodySm" style={{ marginTop: 8 }}>
           {days.length > 0
-            ? `About $${monthly.toLocaleString('en-US')} a month if every slot books. Nearby kitchens charge $40–55.`
-            : 'Nearby kitchens charge $40–55 an hour.'}
+            ? `About $${monthly.toLocaleString('en-US')} a month if every slot books (simple estimate: rate × hours × days).`
+            : 'Pick the days your kitchen sits idle.'}
         </Text>
       </FadeUp>
     </StepScreen>

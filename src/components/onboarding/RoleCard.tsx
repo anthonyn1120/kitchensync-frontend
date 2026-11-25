@@ -10,7 +10,8 @@ import { colors, fonts, radius } from '@/theme';
 import { ease, pressSpring } from './Motion';
 
 type Props = {
-  photo: string;
+  /** Bundled photo (require) or a remote URL. */
+  photo: number | string;
   badge: string;
   title: string;
   description: string;
@@ -44,7 +45,7 @@ export function RoleCard({ photo, badge, title, description, onPress }: Props) {
       <GlassPanel radius={radius.panel - 4} style={{ flex: 1 }} contentStyle={styles.content}>
         <View style={styles.photo}>
           <Animated.View style={[StyleSheet.absoluteFill, photoStyle]}>
-            <Image source={{ uri: photo }} style={[StyleSheet.absoluteFill, { opacity: 0.85 }]} contentFit="cover" transition={300} />
+            <Image source={photo} style={StyleSheet.absoluteFill} contentFit="cover" transition={300} />
           </Animated.View>
           <LinearGradient colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.4)']} style={StyleSheet.absoluteFill} />
           <View style={styles.badge}>
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
   photo: {
     flex: 1,
     minHeight: 110,
-    maxHeight: 180,
+    maxHeight: 220,
     borderRadius: radius.panel - 12,
     overflow: 'hidden',
     backgroundColor: colors.black20,

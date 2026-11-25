@@ -1,111 +1,122 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { View } from 'react-native';
-import { PageTitle, Screen } from '@/components/ui';
-import { EditListingSheet } from '@/components/host/EditListingSheet';
-import { FadeUp } from '@/components/host/FadeUp';
-import { ListingSummary } from '@/components/host/ListingSummary';
-import { computeOpenSlots } from '@/components/host/openSlots';
-import { RenterRequests, type RenterRequestsHandle } from '@/components/host/RenterRequests';
-import { RequestBanner } from '@/components/host/RequestBanner';
-import { StorageUtilization } from '@/components/host/StorageUtilization';
-import { TodaySchedule } from '@/components/host/TodaySchedule';
-import { useToast } from '@/components/host/Toast';
-import { WeekHero } from '@/components/host/WeekHero';
-import { hostListing } from '@/data/mock';
+import { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Image } from 'expo-image';
+import { Check, Clock } from 'lucide-react-native';
+import { PillButton, Screen, Text } from '@/components/ui';
+import { Card, Choice, clay, Label, SampleTag } from '@/components/demo/ui';
+import { WEEKDAYS } from '@/components/onboarding/Controls';
+import { hourPresets } from '@/components/onboarding/options';
+import { persona, photos } from '@/data/demo';
 import { useAppState } from '@/store/AppState';
+import { colors, fonts, radius } from '@/theme';
 
-/** The request the demo "notification" announces. */
-const BANNER_REQUEST_ID = 'r2';
-const BANNER_DELAY_MS = 1200;
-/** The banner shows once per app session. */
-let bannerShown = false;
+type Status = 'pending' | 'approved' | 'declined';
 
+/** Kitchen-owner home: the listing, the idle hours it has opened up, and incoming requests to approve. */
 export default function HostDashboard() {
-  const { hostSetup, updateHostSetup, requests, bookings } = useAppState();
-  const toast = useToast();
-  const requestsRef = useRef<RenterRequestsHandle>(null);
-  const [editOpen, setEditOpen] = useState(false);
-  const [active, setActive] = useState(true);
+  const { hostSetup, updateHostSetup, demoRequests } = useAppState();
+  const [status, setStatus] = useState<Record<string, Status>>({});
 
-  const slots = useMemo(
-    () =>
-      computeOpenSlots({
-        days: hostSetup.days,
-        hours: hostSetup.hours,
-        bookings,
-        requests,
-        listingId: hostListing.id,
-      }),
-    [hostSetup.days, hostSetup.hours, bookings, requests],
-  );
+  // Requests the food business sent in this session; a sample one until then.
+  const incoming =
+    demoRequests.length > 0
+      ? demoRequests.map((r) => ({ id: r.id, what: r.mode === 'tour' ? 'Tour request' : `Booking request · ${r.hours} hrs`, when: `${r.date} · ${r.time}` }))
+      : [{ id: 'sample', what: 'Tour request', when: 'Tue · 10:00 AM' }];
 
-  // In-app notification for a new request, shortly after the dashboard first opens.
-  const bannerRequest = requests.find((r) => r.id === BANNER_REQUEST_ID && r.status === 'pending');
-  const [bannerVisible, setBannerVisible] = useState(false);
-  useEffect(() => {
-    if (bannerShown) return;
-    const t = setTimeout(() => {
-      bannerShown = true;
-      setBannerVisible(true);
-    }, BANNER_DELAY_MS);
-    return () => clearTimeout(t);
-  }, []);
-
-  const lowerRate = Math.round(hostSetup.ratePerHour * 0.85);
+  const hoursPerDay = hourPresets.find((p) => p.label === hostSetup.hours)?.hours ?? 6;
+  const idle = Math.round(hoursPerDay * hostSetup.days.length);
 
   return (
-    <View style={{ flex: 1 }}>
-      <Screen withTabBar scroll>
-        <FadeUp index={0}>
-          <PageTitle eyebrow="Host Mode" title="Dashboard" />
-        </FadeUp>
+    <Screen withTabBar scroll>
+      <Text style={styles.title}>My kitchen</Text>
 
-        <View style={{ gap: 20 }}>
-          <FadeUp index={1}>
-            <WeekHero
-              slots={slots}
-              onShare={(s) => toast.show(`${s.dayLabel} · ${s.timeLabel} shared with renters who saved you`)}
-              onLowerPrice={(s) => toast.show(`${s.dayLabel} · ${s.timeLabel} now $${lowerRate}/hr`)}
-            />
-          </FadeUp>
-          <FadeUp index={2} style={{ marginTop: 4 }}>
-            <RenterRequests ref={requestsRef} toast={toast.show} />
-          </FadeUp>
-          <FadeUp index={3}>
-            <TodaySchedule />
-          </FadeUp>
-          <FadeUp index={4}>
-            <ListingSummary active={active} rate={hostSetup.ratePerHour} onEdit={() => setEditOpen(true)} />
-          </FadeUp>
-          <FadeUp index={5}>
-            <StorageUtilization />
-          </FadeUp>
+      <Card style={{ padding: 8 }}>
+        <View style={styles.photo}>
+          <Image source={photos.nvcKitchen} style={StyleSheet.absoluteFill} contentFit="cover" contentPosition={{ top: '62%' }} />
+          <View style={{ position: 'absolute', top: 10, left: 10 }}>
+            <SampleTag onPhoto />
+          </View>
         </View>
-      </Screen>
+        <View style={{ padding: 8, paddingTop: 12 }}>
+          <Text style={styles.name}>{hostSetup.facilityName}</Text>
+          <Text style={styles.small}>
+            {hostSetup.address} · ${hostSetup.ratePerHour}/hr · listed
+          </Text>
+        </View>
+      </Card>
 
-      <EditListingSheet
-        visible={editOpen}
-        onClose={() => setEditOpen(false)}
-        rate={hostSetup.ratePerHour}
-        description={hostSetup.description}
-        active={active}
-        onSave={({ rate, description, active: nextActive }) => {
-          updateHostSetup({ ratePerHour: rate, description });
-          setActive(nextActive);
-          setEditOpen(false);
-          toast.show(nextActive ? 'Listing updated' : 'Listing paused — hidden from search');
-        }}
-      />
-      {toast.element}
+      <Label style={{ marginTop: 22 }} right={<Text style={styles.sample}>{idle} idle hrs a week listed</Text>}>
+        Hours you’ve opened up
+      </Label>
+      <Card>
+        <View style={styles.days}>
+          {WEEKDAYS.map((d) => {
+            const on = hostSetup.days.includes(d);
+            return (
+              <Choice
+                key={d}
+                label={d}
+                on={on}
+                style={styles.day}
+                onPress={() => updateHostSetup({ days: on ? hostSetup.days.filter((x) => x !== d) : WEEKDAYS.filter((x) => x === d || hostSetup.days.includes(x)) })}
+              />
+            );
+          })}
+        </View>
+        <View style={styles.hoursRow}>
+          <Clock size={16} color={colors.textSecondary} />
+          <Text style={styles.small}>{hostSetup.hours} · tap a day to open or close it</Text>
+        </View>
+      </Card>
 
-      {bannerVisible && bannerRequest && (
-        <RequestBanner
-          request={bannerRequest}
-          onApprove={() => requestsRef.current?.approve(bannerRequest.id)}
-          onView={() => requestsRef.current?.open(bannerRequest.id)}
-          onDismissed={() => setBannerVisible(false)}
-        />
-      )}
-    </View>
+      <Label style={{ marginTop: 22 }}>Requests</Label>
+      <View style={{ gap: 10 }}>
+        {incoming.map((r) => {
+          const st = status[r.id] ?? 'pending';
+          return (
+            <Card key={r.id} style={{ gap: 12 }}>
+              <View style={styles.reqHead}>
+                <Image source={photos.wanolaBag} style={styles.avatar} contentFit="contain" />
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.reqName}>{persona.name}</Text>
+                  <Text style={styles.small}>
+                    {r.what} · {r.when}
+                  </Text>
+                </View>
+              </View>
+              {st === 'pending' ? (
+                <View style={{ flexDirection: 'row', gap: 8 }}>
+                  <PillButton label="Decline" style={{ flex: 1 }} onPress={() => setStatus((s) => ({ ...s, [r.id]: 'declined' }))} />
+                  <PillButton label="Approve" variant="primary" style={{ flex: 1 }} haptic="success" onPress={() => setStatus((s) => ({ ...s, [r.id]: 'approved' }))} />
+                </View>
+              ) : (
+                <View style={[styles.result, st === 'declined' && { backgroundColor: 'rgba(207,113,83,0.12)' }]}>
+                  {st === 'approved' && <Check size={15} color={colors.accentMatch} strokeWidth={3} />}
+                  <Text style={[styles.resultText, st === 'declined' && { color: clay }]}>{st === 'approved' ? 'Approved. You stay in control of who cooks here.' : 'Declined'}</Text>
+                </View>
+              )}
+            </Card>
+          );
+        })}
+      </View>
+      <Text style={styles.note}>Sample data. You approve every booking and tour.</Text>
+    </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  title: { fontFamily: fonts.serif, fontWeight: '700', fontSize: 30, lineHeight: 36, letterSpacing: -0.4, color: colors.textPrimary, marginTop: 6, marginBottom: 16 },
+  photo: { height: 170, borderRadius: radius.card - 6, overflow: 'hidden', backgroundColor: colors.black20 },
+  name: { fontFamily: fonts.serif, fontWeight: '700', fontSize: 21, lineHeight: 26, color: colors.textPrimary },
+  small: { fontFamily: fonts.regular, fontSize: 13.5, lineHeight: 19, color: colors.textSecondary },
+  sample: { fontFamily: fonts.semibold, fontSize: 12, lineHeight: 16, color: colors.accentMatch },
+  days: { flexDirection: 'row', gap: 5 },
+  day: { flex: 1, paddingHorizontal: 0, borderRadius: 14 },
+  hoursRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 12 },
+  reqHead: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  avatar: { width: 52, height: 52, borderRadius: 14, backgroundColor: '#E9E9EC' },
+  reqName: { fontFamily: fonts.semibold, fontSize: 16, lineHeight: 21, color: colors.textPrimary },
+  result: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 12, borderRadius: 14, backgroundColor: colors.accentMatchSoft },
+  resultText: { flex: 1, fontFamily: fonts.semibold, fontSize: 14, lineHeight: 19, color: colors.accentMatch },
+  note: { fontFamily: fonts.regular, fontSize: 12.5, lineHeight: 18, color: colors.textTertiary, textAlign: 'center', marginTop: 18 },
+});

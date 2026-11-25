@@ -1,5 +1,5 @@
-import { SettingsScreen } from '@/components/settings';
+import { Profile } from '@/components/demo/Profile';
 
-export default function HostSettings() {
-  return <SettingsScreen side="host" />;
+export default function HostProfile() {
+  return <Profile side="host" />;
 }

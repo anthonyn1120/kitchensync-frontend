@@ -4,24 +4,23 @@ import { router } from 'expo-router';
 import { NavHeader, Text } from '@/components/ui';
 import { FadeUp } from '@/components/onboarding/FadeUp';
 import { RoleCard } from '@/components/onboarding/RoleCard';
-import { images } from '@/data/images';
+import { photos } from '@/data/demo';
 import { useAppState } from '@/store/AppState';
 import { colors, fonts } from '@/theme';
 
 /** "How will you use Kitchen Sync?" — picks the renter or host branch. */
 export default function RoleScreen() {
   const insets = useSafeAreaInsets();
-  const { setRole, updateHostSetup } = useAppState();
+  const { setRole } = useAppState();
 
   const chooseRenter = () => {
     setRole('renter');
-    // Pitch demo: Maya's answers stay filled in (Beverages, Bothell ZIP) so it taps straight through.
-    router.push('/onboarding/renter/product');
+    // Pitch demo: the search is pre-filled for Wanola Granola (Bellevue, 98005) so it taps straight through.
+    router.push('/onboarding/renter/making');
   };
 
   const chooseHost = () => {
     setRole('host');
-    updateHostSetup({ facilityName: '', facilityType: null, address: '', listingSource: null, description: '' });
     router.push('/onboarding/host/basics');
   };
 
@@ -37,19 +36,19 @@ export default function RoleScreen() {
       <View style={styles.cards}>
         <FadeUp stagger={2} style={{ flex: 1 }}>
           <RoleCard
-            photo={images.chefLine}
-            badge="Renter"
+            photo={photos.nvcStorage}
+            badge="Food business"
             title="I need space"
-            description="Find verified commercial kitchens and factories with idle production capacity."
+            description="Book a licensed kitchen by the hour. No lease, price shown up front."
             onPress={chooseRenter}
           />
         </FadeUp>
         <FadeUp stagger={3} style={{ flex: 1 }}>
           <RoleCard
-            photo={images.factoryFloor}
-            badge="Host"
+            photo={photos.nvcKitchen}
+            badge="Kitchen owner"
             title="I have space"
-            description="Monetize your unused equipment and schedule by hosting vetted food brands."
+            description="List the hours your kitchen sits idle and approve who books them."
             onPress={chooseHost}
           />
         </FadeUp>
@@ -61,10 +60,11 @@ export default function RoleScreen() {
 const styles = StyleSheet.create({
   screen: { flex: 1, paddingHorizontal: 20 },
   title: {
-    fontFamily: fonts.medium,
+    fontFamily: fonts.serif,
+    fontWeight: '700',
     fontSize: 30,
     lineHeight: 36,
-    letterSpacing: -0.9,
+    letterSpacing: -0.4,
     color: colors.textPrimary,
     marginBottom: 28,
   },
